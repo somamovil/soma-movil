@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>SOMA — Recovery Score</title>
+<meta name="description" content="5 preguntas. 45 segundos. Tu Recovery Score con SOMA." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg:#FFFFFF;
+    --panel:#F4F5F6;
+    --track:#E7E9EA;
+    --ink:#000000;
+    --muted:#333333;
+    --hint:#C4C9CB;
+    --clay:#E8702F;
+    --clay-700:#C85A20;
+    --amber:#C98A2E;
+    --moss:#2E9E68;
+    --alert:#E2563D;
+    --line: rgba(196,201,203,0.6);
+    --radius: 20px;
+    --font-display: 'Anton', sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100dvh;
+    min-height: 100vh;
+    display:flex;
+    justify-content:center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .phone{
+    width:100%;
+    max-width: 440px;
+    min-height: 100dvh;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    padding: 28px 22px 34px;
+  }
+
+  @media (min-width: 480px){
+    body{ padding: 28px 0; }
+    .phone{
+      min-height: auto;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+    }
+  }
+
+  button{ font-family: inherit; }
+
+  .eyebrow{
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .wordmark{
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    font-size: 1.05rem;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap: 7px;
+  }
+
+  .wordmark .dot{ color: var(--ink); }
+
+  header.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 18px;
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro-hero{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap: 18px;
+  }
+
+  .logo-hero-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 2px;
+  }
+  .logo-hero{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation: logoPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes logoPop{
+    from{ opacity:0; transform: scale(0.55); }
+    to{ opacity:1; transform: scale(1); }
+  }
+  .logo-hero::before{
+    content:"";
+    position:absolute;
+    inset: -26px;
+    background: radial-gradient(circle, rgba(0,102,255,0.22) 0%, rgba(0,102,255,0) 72%);
+    border-radius:50%;
+    z-index:-1;
+  }
+
+  .intro-hero h1{
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.96;
+    font-size: clamp(2.3rem, 9vw, 3.1rem);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .intro-hero h1 em{
+    font-style: normal;
+    color: var(--ink);
+  }
+
+  .intro-sub{
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  .pillars{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .pillar-chip{
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 7px 13px;
+    font-size: 0.78rem;
+    color: var(--ink);
+    background: var(--panel);
+  }
+
+  .cta{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    border:none;
+    border-radius: 14px;
+    padding: 17px 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+  .cta:active{ transform: scale(0.98); }
+  .cta-primary{
+    background: #0066FF;
+    color: #FFFFFF;
+    box-shadow: 0 14px 30px -12px rgba(0,102,255,0.45);
+  }
+  .cta-primary:hover{ filter: brightness(1.06); }
+  .cta-ghost{
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .link-row{
+    text-align:center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 14px;
+  }
+  .link-row button{
+    background:none; border:none; color: var(--ink);
+    text-decoration: underline;
+    cursor:pointer; font-size: inherit; padding:0;
+  }
+
+  .tagline{
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align:center;
+    line-height:1.5;
+    margin-top: 22px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  /* ---------- PROGRESS ---------- */
+  .progress-wrap{ margin-bottom: 26px; }
+  .progress-track{
+    height: 4px;
+    background: var(--track);
+    border-radius: 4px;
+    overflow:hidden;
+    margin-top: 10px;
+  }
+  .progress-fill{
+    height:100%;
+    background: #0066FF;
+    border-radius: 4px;
+    transition: width 0.35s ease;
+  }
+
+  /* ---------- QUIZ ---------- */
+  .quiz{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+  .q-text{
+    font-family: var(--font-display);
+    font-weight:400;
+    text-transform: uppercase;
+    font-size: clamp(1.5rem, 6.5vw, 1.9rem);
+    line-height: 1.08;
+    margin: 4px 0 26px;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+  }
+  .option{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 15px 16px;
+    text-align:left;
+    color: var(--ink);
+    cursor:pointer;
+    font-size: 0.92rem;
+    line-height:1.35;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+  }
+  .option:hover{ border-color: rgba(0,102,255,0.5); }
+  .option:active{ transform: scale(0.99); }
+  .option .bullet{
+    flex-shrink:0;
+    width: 10px; height:10px;
+    border-radius:50%;
+    border: 2px solid var(--muted);
+  }
+  .option.selected{
+    border-color: #0066FF;
+    background: rgba(0,102,255,0.10);
+  }
+  .option.selected .bullet{
+    background: #0066FF;
+    border-color: #0066FF;
+  }
+  .quiz-back{
+    margin-top: 18px;
+    align-self:flex-start;
+    background:none;border:none;color:var(--muted);
+    font-size:0.82rem; cursor:pointer; padding:6px 0;
+  }
+
+  /* ---------- LEAD ---------- */
+  .lead{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap: 18px;
+  }
+  .lead h2{
+    font-family: var(--font-display);
+    text-transform:uppercase;
+    font-size: clamp(1.7rem, 7vw, 2.1rem);
+    margin:0;
+    line-height: 1.02;
+  }
+  .lead p{
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height:1.5;
+    margin:0;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .field label{
+    font-size: 0.74rem;
+    color: var(--muted);
+    text-transform:uppercase;
+    letter-spacing: 0.06em;
+  }
+  .field input{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 14px;
+    color: var(--ink);
+    font-size: 0.95rem;
+    outline:none;
+  }
+  .field input:focus-visible{
+    border-color: var(--clay);
+  }
+  .micro{
+    color: var(--muted);
+    font-size: 0.74rem;
+    text-align:center;
+  }
+
+  /* ---------- RESULT ---------- */
+  .result{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap: 6px;
+    padding-top: 4px;
+  }
+  .result .eyebrow{ margin-bottom: 2px; }
+
+  .gauge-wrap{
+    position:relative;
+    width: 100%;
+    max-width: 280px;
+    margin: 6px auto 0;
+  }
+  .gauge-wrap svg{ width:100%; display:block; }
+  .gauge-score{
+    position:absolute;
+    left:0; right:0;
+    bottom: 6%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .gauge-score .num{
+    font-family: var(--font-display);
+    font-size: clamp(3.6rem, 19vw, 4.6rem);
+    line-height: 0.85;
+    letter-spacing: 0.01em;
+  }
+  .gauge-score .of100{
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .band-label{
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
+  .band-copy{
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 6px auto 0;
+  }
+
+  .breakdown{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    margin-top: 22px;
+    text-align:left;
+  }
+  .breakdown-row{ display:flex; flex-direction:column; gap:5px; }
+  .breakdown-row .lbl{
+    display:flex; justify-content:space-between;
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .breakdown-row .lbl span:last-child{ color: var(--ink); font-weight:600; }
+  .bar-track{
+    height: 6px;
+    background: var(--track);
+    border-radius: 6px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    border-radius:6px;
+    transition: width 0.6s ease;
+  }
+
+  .result-actions{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .challenge-banner{
+    margin-top: 14px;
+    width:100%;
+    border: 1px dashed var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: var(--panel);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .challenge-banner:hover{ border-color: rgba(232,112,47,0.5); }
+  .challenge-banner .txt{ font-size: 0.84rem; line-height:1.4; }
+  .challenge-banner .txt b{ display:block; font-size:0.95rem; }
+  .challenge-banner .arrow{ color: var(--ink); font-size:1.2rem; flex-shrink:0; }
+
+  .restart-row{
+    text-align:center;
+    margin-top: 16px;
+  }
+  .restart-row button{
+    background:none;border:none;color:var(--muted);
+    text-decoration:underline; cursor:pointer; font-size:0.83rem;
+  }
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: #FFFFFF;
+    padding: 11px 18px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight:600;
+    box-shadow: 0 12px 30px -8px rgba(0,0,0,0.35);
+    z-index: 50;
+    opacity:0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events:none;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(-4px); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; animation: none !important; }
+  }
+
+  .fade-in{ animation: fadeIn 0.35s ease both; }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(6px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="phone" id="app"></div>
+<div class="toast" id="toast"></div>
+<canvas id="shareCanvas" width="1080" height="1920" style="display:none;"></canvas>
+
+<script>
+/* =========================================================
+   SOMA — Recovery Score
+   Config rápida: editá estas 3 constantes antes de publicar.
+   ========================================================= */
+
+// Número de WhatsApp de SOMA en formato internacional, sin "+" ni espacios.
+// Ejemplo: 5491155551234 (54 = Argentina, 9 + cod área sin 0 + número sin 15)
+const SOMA_WHATSAPP = "5491155768733"; // Número de SOMA
+
+// Link donde vas a publicar esta página (para compartir). Mientras no lo tengas, dejalo así.
+const SOMA_QUIZ_URL = "https://tu-link-aqui.com"; // TODO: reemplazar
+
+// Lead capture sin backend, vía Google Forms (truco "fire and forget").
+// Dejalo como está y la página funciona igual, simplemente no guarda los leads en ningún lado.
+// Para activarlo: 1) creá un Google Form con 3 preguntas de texto corto (whatsapp, instagram, score)
+// 2) abrí el form, clic en los 3 puntos > "Obtener link prellenado", completá cualquier cosa y mirá la URL
+// 3) ahí vas a ver "entry.123456" para cada campo y la URL base terminada en /formResponse
+const LEAD_FORM_ACTION = "REEMPLAZAR_CON_TU_FORM_URL"; // TODO
+const LEAD_FORM_FIELDS = { whatsapp: "entry.000000", instagram: "entry.000001", score: "entry.000002" }; // TODO
+
+// Isotipo de SÖMA (la "Ö"), reconstruido como vector para que se vea nítido en cualquier tamaño.
+function logoMark(size){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false" style="display:block;flex-shrink:0;">
+  <path fill-rule="evenodd" fill="#0066FF" d="M 512 267 A 280 287 0 1 0 512 841 A 280 287 0 1 0 512 267 Z M 512 377 A 146 176 0 1 1 512 730 A 146 176 0 1 1 512 377 Z"/>
+  <circle cx="428" cy="202" r="51" fill="#0066FF"/>
+  <circle cx="595" cy="202" r="51" fill="#0066FF"/>
+</svg>`;
+}
+
+/* ========================================================= */
+
+const QUESTIONS = [
+  {
+    id: "sueno",
+    pillar: "sueno",
+    text: "¿Cuántas horas dormís las noches antes de entrenar o jugar?",
+    options: [
+      { label: "Menos de 5 horas", value: 0 },
+      { label: "Entre 5 y 6 horas", value: 1 },
+      { label: "Entre 6 y 7 horas", value: 2 },
+      { label: "7 horas o más", value: 3 },
+    ],
+  },
+  {
+    id: "carga",
+    pillar: "carga",
+    text: "¿Cómo venís de carga esta semana entre entrenamientos y partido?",
+    options: [
+      { label: "Semana liviana, bien repartida", value: 3 },
+      { label: "Normal, lo de siempre", value: 2 },
+      { label: "Cargada, varios días seguidos fuerte", value: 1 },
+      { label: "A full sin parar, no paré ni un día", value: 0 },
+    ],
+  },
+  {
+    id: "dolor",
+    pillar: "carga",
+    text: "Al otro día de jugar o entrenar fuerte, ¿cómo te levantás?",
+    options: [
+      { label: "Como nuevo, sin drama", value: 3 },
+      { label: "Algo cargado pero respondo bien", value: 2 },
+      { label: "Rígido, me cuesta arrancar el día", value: 1 },
+      { label: "Con dolor que no afloja en todo el día", value: 0 },
+    ],
+  },
+  {
+    id: "recovery",
+    pillar: "recovery",
+    text: "¿Hacés algo de recuperación activa después de entrenar (estiramiento, foam roller, hielo, compresión)?",
+    options: [
+      { label: "Siempre, es parte de la rutina", value: 3 },
+      { label: "A veces, cuando me acuerdo", value: 2 },
+      { label: "Casi nunca", value: 1 },
+      { label: "Nunca, termino y me voy directo", value: 0 },
+    ],
+  },
+  {
+    id: "nutricion",
+    pillar: "recovery",
+    text: "¿Y la hidratación y la comida después del esfuerzo?",
+    options: [
+      { label: "Tomo agua o electrolitos y como bien después", value: 3 },
+      { label: "Más o menos, depende del día", value: 2 },
+      { label: "Me olvido bastante", value: 1 },
+      { label: "Cero, directo al asado o la birra sin reponer nada", value: 0 },
+    ],
+  },
+];
+
+const MAX_PER_Q = 3;
+const TOTAL_MAX = QUESTIONS.length * MAX_PER_Q;
+
+const BANDS = [
+  {
+    max: 40,
+    key: "low",
+    color: "var(--alert)",
+    hex: "#E2563D",
+    label: "Alerta roja",
+    copy: "Estás entrenando con el tanque vacío. El cuerpo está cobrando esa deuda tarde o temprano, y normalmente elige el peor momento para hacerlo.",
+  },
+  {
+    max: 70,
+    key: "mid",
+    color: "var(--amber)",
+    hex: "#C98A2E",
+    label: "Zona gris",
+    copy: "Rendís, pero la estás pagando. Con algunos ajustes en sueño y recovery activo, ese margen que perdés en cancha se recupera rápido.",
+  },
+  {
+    max: 100,
+    key: "high",
+    color: "var(--moss)",
+    hex: "#2E9E68",
+    label: "Sólido",
+    copy: "Así se aguanta una temporada entera sin romperse. Mantener esto en el tiempo es lo que separa al que juega bien un partido del que rinde toda la temporada.",
+  },
+];
+
+function getBand(score){
+  return BANDS.find(b => score <= b.max) || BANDS[BANDS.length - 1];
+}
+
+/* ---------------- estado ---------------- */
+const state = {
+  screen: "intro", // intro | quiz | lead | result
+  qIndex: 0,
+  answers: [], // { id, pillar, value }
+  lead: { whatsapp: "", instagram: "" },
+};
+
+function resetQuiz(){
+  state.screen = "intro";
+  state.qIndex = 0;
+  state.answers = [];
+  state.lead = { whatsapp: "", instagram: "" };
+  render();
+}
+
+function computeScores(){
+  const total = state.answers.reduce((s, a) => s + a.value, 0);
+  const totalPct = Math.round((total / TOTAL_MAX) * 100);
+
+  const pillarKeys = ["sueno", "carga", "recovery"];
+  const pillars = {};
+  pillarKeys.forEach(p => {
+    const items = state.answers.filter(a => a.pillar === p);
+    const max = items.length * MAX_PER_Q;
+    const sum = items.reduce((s, a) => s + a.value, 0);
+    pillars[p] = max ? Math.round((sum / max) * 100) : 0;
+  });
+
+  return { totalPct, pillars };
+}
+
+/* ---------------- render ---------------- */
+const app = document.getElementById("app");
+
+function render(){
+  if (state.screen === "intro") app.innerHTML = renderIntro();
+  else if (state.screen === "quiz") app.innerHTML = renderQuiz();
+  else if (state.screen === "lead") app.innerHTML = renderLead();
+  else if (state.screen === "result") app.innerHTML = renderResult();
+  app.classList.remove("fade-in");
+  requestAnimationFrame(() => app.classList.add("fade-in"));
+}
+
+function renderIntro(){
+  return `
+    <header class="top">
+      <span class="wordmark">SÖMA Movil</span>
+      <span class="eyebrow">Recovery Score</span>
+    </header>
+    <div class="intro-hero">
+      <div class="logo-hero-wrap"><div class="logo-hero">${logoMark(76)}</div></div>
+      <h1>¿Cómo llega<br/>tu cuerpo a <em>jugar</em>?</h1>
+      <p class="intro-sub">5 preguntas, 45 segundos. Sacate tu Recovery Score y enterate si estás llegando entero al próximo partido.</p>
+      <div class="pillars">
+        <span class="pillar-chip">Sueño</span>
+        <span class="pillar-chip">Carga</span>
+        <span class="pillar-chip">Recovery activo</span>
+      </div>
+    </div>
+    <button class="cta cta-primary" data-action="start">Conocer mi recuperación →</button>
+    <p class="tagline">SÖMA va donde vos estés.</p>
+  `;
+}
+
+function renderQuiz(){
+  const q = QUESTIONS[state.qIndex];
+  const pct = Math.round((state.qIndex / QUESTIONS.length) * 100);
+  const selected = state.answers[state.qIndex];
+
+  return `
+    <div class="progress-wrap">
+      <span class="eyebrow">Pregunta ${state.qIndex + 1} de ${QUESTIONS.length}</span>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="quiz">
+      <h2 class="q-text">${q.text}</h2>
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <button class="option ${selected && selected.value === opt.value ? "selected" : ""}" data-action="answer" data-qindex="${state.qIndex}" data-oindex="${i}">
+            <span class="bullet"></span>
+            <span>${opt.label}</span>
+          </button>
+        `).join("")}
+      </div>
+      ${state.qIndex > 0 ? `<button class="quiz-back" data-action="back">← Volver</button>` : ""}
+    </div>
+  `;
+}
+
+function renderLead(){
+  return `
+    <div class="lead">
+      <span class="eyebrow">Tu score está listo</span>
+      <h2>Dejá tu WhatsApp y te decimos cómo mejorarlo.</h2>
+      <p>Sin spam. Te contactamos para contarte qué significa tu resultado y cómo podemos ayudarte a recuperarte mejor entre partidos.</p>
+      <div class="field">
+        <label for="wa">Tu WhatsApp</label>
+        <input id="wa" type="tel" inputmode="tel" placeholder="11 2345 6789" autocomplete="tel" />
+      </div>
+      <div class="field">
+        <label for="ig">Instagram (opcional)</label>
+        <input id="ig" type="text" placeholder="@tuusuario" autocomplete="off" />
+      </div>
+      <button class="cta cta-primary" data-action="submit-lead">Ver mi Recovery Score</button>
+      <div class="link-row"><button data-action="skip-lead">Ver sin dejar mis datos</button></div>
+    </div>
+  `;
+}
+
+function renderResult(){
+  const { totalPct, pillars } = computeScores();
+  const band = getBand(totalPct);
+
+  const circumference = 100; // usamos pathLength="100", así dasharray es directo
+  const dashOffset = circumference - totalPct;
+
+  const pillarMeta = [
+    { key: "sueno", label: "Sueño" },
+    { key: "carga", label: "Carga" },
+    { key: "recovery", label: "Recovery activo" },
+  ];
+
+  return `
+    <header class="top">
+      <span class="wordmark">SÖMA Movil</span>
+      <span class="eyebrow">Recovery Score</span>
+    </header>
+    <div class="result">
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 200 120">
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#E7E9EA" stroke-width="14" stroke-linecap="round" />
+          <path id="gaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="${band.hex}" stroke-width="14" stroke-linecap="round"
+            pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+        </svg>
+        <div class="gauge-score">
+          <span class="num" id="scoreNum">0</span>
+          <span class="of100">SOBRE 100</span>
+        </div>
+      </div>
+      <div class="band-label">${band.label}</div>
+      <p class="band-copy">${band.copy}</p>
+
+      <div class="breakdown">
+        ${pillarMeta.map(p => `
+          <div class="breakdown-row">
+            <div class="lbl"><span>${p.label}</span><span>${pillars[p.key]}%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:0%; background:${band.hex};" data-target="${pillars[p.key]}"></div></div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="result-actions">
+        <button class="cta cta-primary" data-action="whatsapp" data-score="${totalPct}" data-band="${band.label}">Quiero mejorar mi score</button>
+        <button class="cta cta-ghost" data-action="share" data-score="${totalPct}" data-band="${band.label}">Compartir mi score</button>
+      </div>
+
+      <button class="challenge-banner" data-action="challenge" data-score="${totalPct}">
+        <span class="txt"><b>Retá a un compañero</b>a superar tu score</span>
+        <span class="arrow">↗</span>
+      </button>
+
+      <div class="restart-row"><button data-action="restart">Volver a hacer el test</button></div>
+    </div>
+  `;
+}
+
+/* ---------------- acciones ---------------- */
+app.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-action]");
+  if (!el) return;
+  const action = el.dataset.action;
+
+  if (action === "start"){
+    state.screen = "quiz";
+    state.qIndex = 0;
+    render();
+  }
+
+  else if (action === "answer"){
+    const qi = Number(el.dataset.qindex);
+    const oi = Number(el.dataset.oindex);
+    const q = QUESTIONS[qi];
+    const opt = q.options[oi];
+    state.answers[qi] = { id: q.id, pillar: q.pillar, value: opt.value };
+
+    setTimeout(() => {
+      if (qi < QUESTIONS.length - 1){
+        state.qIndex = qi + 1;
+        render();
+      } else {
+        state.screen = "lead";
+        render();
+      }
+    }, 180);
+    render(); // refleja la selección al instante
+  }
+
+  else if (action === "back"){
+    state.qIndex = Math.max(0, state.qIndex - 1);
+    render();
+  }
+
+  else if (action === "submit-lead"){
+    const wa = document.getElementById("wa").value.trim();
+    const ig = document.getElementById("ig").value.trim();
+    state.lead = { whatsapp: wa, instagram: ig };
+    const { totalPct } = computeScores();
+    sendLead({ whatsapp: wa, instagram: ig, score: totalPct });
+    state.screen = "result";
+    render();
+    animateResult();
+  }
+
+  else if (action === "skip-lead"){
+    state.screen = "result";
+    render();
+    animateResult();
+  }
+
+  else if (action === "restart"){
+    resetQuiz();
+  }
+
+  else if (action === "whatsapp"){
+    const score = el.dataset.score;
+    const band = el.dataset.band;
+    const msg = `Hola SOMA! Hice el Recovery Score y me dio ${score}/100 (${band}). Quiero saber cómo mejorarlo 💪`;
+    window.open(`https://wa.me/${SOMA_WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  else if (action === "share"){
+    const score = el.dataset.score;
+    const band = el.dataset.band;
+    shareScore(score, band, false);
+  }
+
+  else if (action === "challenge"){
+    const score = el.dataset.score;
+    shareScore(score, "", true);
+  }
+});
+
+function animateResult(){
+  const { totalPct } = computeScores();
+  const numEl = document.getElementById("scoreNum");
+  const gaugeFill = document.getElementById("gaugeFill");
+  const bars = document.querySelectorAll(".bar-fill");
+
+  let current = 0;
+  const duration = 700;
+  const start = performance.now();
+
+  function tick(now){
+    const t = Math.min(1, (now - start) / duration);
+    current = Math.round(t * totalPct);
+    numEl.textContent = current;
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  requestAnimationFrame(() => {
+    gaugeFill.style.transition = "stroke-dashoffset 0.9s ease";
+    gaugeFill.style.strokeDashoffset = String(100 - totalPct);
+  });
+
+  bars.forEach(b => {
+    requestAnimationFrame(() => { b.style.width = b.dataset.target + "%"; });
+  });
+}
+
+/* ---------------- lead a Google Forms (opcional) ---------------- */
+function sendLead(data){
+  if (!LEAD_FORM_ACTION || LEAD_FORM_ACTION.includes("REEMPLAZAR")) return;
+  const params = new URLSearchParams();
+  params.append(LEAD_FORM_FIELDS.whatsapp, data.whatsapp || "");
+  params.append(LEAD_FORM_FIELDS.instagram, data.instagram || "");
+  params.append(LEAD_FORM_FIELDS.score, String(data.score));
+  fetch(LEAD_FORM_ACTION, { method: "POST", mode: "no-cors", body: params }).catch(() => {});
+}
+
+/* ---------------- compartir ---------------- */
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+async function shareScore(score, band, isChallenge){
+  const text = isChallenge
+    ? `¿Aguantás más que yo? Mi Recovery Score con SOMA es ${score}/100. Hacé el test y mandame el tuyo 👀`
+    : `Mi Recovery Score con SOMA: ${score}/100 (${band}). 💪`;
+
+  try {
+    const blob = await buildShareCard(score, isChallenge ? "Te reto" : band);
+    const file = new File([blob], "soma-recovery-score.png", { type: "image/png" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })){
+      await navigator.share({ files: [file], text, url: SOMA_QUIZ_URL });
+      return;
+    }
+    if (navigator.share){
+      await navigator.share({ text, url: SOMA_QUIZ_URL });
+      return;
+    }
+    downloadBlob(blob, "soma-recovery-score.png");
+    showToast("Tarjeta descargada. Subila a tu historia 📲");
+  } catch (err){
+    if (err && err.name === "AbortError") return;
+    try {
+      const blob = await buildShareCard(score, isChallenge ? "Te reto" : band);
+      downloadBlob(blob, "soma-recovery-score.png");
+      showToast("Tarjeta descargada. Subila a tu historia 📲");
+    } catch (_e){
+      showToast("No se pudo generar la tarjeta para compartir.");
+    }
+  }
+}
+
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+function buildShareCard(score, bandLabel){
+  return new Promise(async (resolve) => {
+    if (document.fonts && document.fonts.ready){
+      try { await document.fonts.ready; } catch(_e){}
+    }
+    const canvas = document.getElementById("shareCanvas");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#1A352C");
+    grad.addColorStop(1, "#0E1F1A");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.textAlign = "center";
+
+    ctx.fillStyle = "#9FB3AA";
+    ctx.font = "600 30px Inter, sans-serif";
+    ctx.fillText("RECOVERY SCORE", W / 2, 220);
+
+    const band = getBand(score);
+    ctx.fillStyle = band.hex;
+    ctx.font = "400 360px Anton, sans-serif";
+    ctx.fillText(String(score), W / 2, 880);
+
+    ctx.fillStyle = "#F4F2EC";
+    ctx.font = "600 38px Inter, sans-serif";
+    ctx.fillText("SOBRE 100", W / 2, 950);
+
+    ctx.fillStyle = band.hex;
+    ctx.font = "400 70px Anton, sans-serif";
+    ctx.fillText(bandLabel.toUpperCase(), W / 2, 1080);
+
+    ctx.fillStyle = "#9FB3AA";
+    ctx.font = "500 32px Inter, sans-serif";
+    ctx.fillText("Hacé tu test en", W / 2, 1700);
+    ctx.fillStyle = "#F4F2EC";
+    ctx.font = "700 36px Inter, sans-serif";
+    ctx.fillText(SOMA_QUIZ_URL.replace(/^https?:\/\//, ""), W / 2, 1750);
+
+    ctx.fillStyle = "#F4F2EC";
+    ctx.font = "400 60px Anton, sans-serif";
+    ctx.fillText("SOMA.", W / 2, 1850);
+
+    canvas.toBlob((blob) => resolve(blob), "image/png");
+  });
+}
+
+/* ---------------- arranque ---------------- */
+function init(){
+  if (document.fonts && document.fonts.ready){
+    document.fonts.load("400 16px Anton");
+    document.fonts.load("600 16px Inter");
+  }
+  render();
+}
+init();
+</script>
+</body>
+</html>
